@@ -1,6 +1,6 @@
 {
     "name": "stillat/database",
-    "description": "",
+    "description": "Provides advanced database features, such as multiple-tenant database architecture.",
     "authors": [
         {
             "name": "Johnathon Koster",
@@ -10,15 +10,15 @@
     "require": {
         "php": ">=5.3.0",
         "illuminate/support": "4.1.*",
-        "laravelbook/ardent": "dev-master"
-    },
-    "require-dev": {
-        "mockery/mockery": "0.9.*",
-        "phpunit/phpunit": "4.0.*"
+        "stillat/common": "1.*",
+        "laravelbook/ardent": "v2.4.2"
     },
     "autoload": {
+        "classmap": [
+            "src/migrations"
+        ],
         "psr-0": {
-            "Stillat\\Database": "src/"
+            "Stillat\\Database\\": "src/"
         }
     },
     "minimum-stability": "stable"

@@ -12,6 +12,16 @@ class DatabaseServiceProvider extends ServiceProvider {
 	protected $defer = false;
 
 	/**
+	 * Bootstrap the application events.
+	 *
+	 * @return void
+	 */
+	public function boot()
+	{
+		$this->package('stillat/database', 'stillat');
+	}
+
+	/**
 	 * Register the service provider.
 	 *
 	 * @return void
