@@ -414,7 +414,7 @@ class TenantManager {
 	public function dropTenant($tenantID)
 	{
 		$this->schemaManager->dropSchema($this->getTierNameWithPrefix($tenantID));
-		$this->tenantRepository->remove($this->getTierNameWithPrefix($tenantID));
+		$this->tenantRepository->removeTenant($this->getTierNameWithPrefix($tenantID));
 	}
 
 	/**

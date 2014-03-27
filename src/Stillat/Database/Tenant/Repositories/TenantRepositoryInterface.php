@@ -65,4 +65,11 @@ interface TenantRepositoryInterface {
 	 */
 	public function removeUserFromTenant($userID, $tenantID);
 
+	/**
+	 * Removes a tenant by tenant ID.
+	 * @param  int   $tenantID
+	 * @return mixed
+	 */
+	public function removeTenant($tenantID);
+
 }

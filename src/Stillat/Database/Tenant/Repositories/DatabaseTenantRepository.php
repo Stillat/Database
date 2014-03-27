@@ -197,4 +197,14 @@ class DatabaseTenantRepository extends BaseRepository implements TenantRepositor
 		return DB::table($this->tenantAccountTable)->where('tenant_id', '=', $tenantID)->where('user_id', '=', $userID)->delete();
 	}
 
+	/**
+	 * Removes a tenant by tenant ID.
+	 * @param  int   $tenantID
+	 * @return mixed
+	 */
+	public function removeTenant($tenantID)
+	{
+		$this->table()->where('tenant_name', '=', $tenantID)->delete();
+	}
+
 }
