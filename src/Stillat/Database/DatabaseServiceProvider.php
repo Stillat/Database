@@ -13,6 +13,7 @@ use Stillat\Database\Console\Tenant\ResetCommand as TenantResetCommand;
 use Stillat\Database\Console\Tenant\CreateCommand as TenantCreateCommand;
 use Stillat\Database\Console\Tenant\MigrateCommand as TenantMigrateCommand;
 use Stillat\Database\Console\Tenant\InstallCommand as TenantInstallCommand;
+use Stillat\Database\Console\Tenant\RefreshCommand as TenantRefreshCommand;
 use Stillat\Database\Console\Tenant\RollbackCommand as TenantRollbackCommand;
 use Stillat\Database\Console\Tenant\UninstallCommand as TenantUninstallCommand;
 use Stillat\Database\Console\Tenant\MigrationsCommand as TenantMigrationsCommand;
@@ -104,7 +105,7 @@ class DatabaseServiceProvider extends ServiceProvider {
 	 */
 	public function registerTenantCommands()
 	{
-		$commands = array('Install', 'Name', 'Uninstall', 'Migrations', 'Create', 'Drop', 'Migrate', 'Rollback', 'Reset');
+		$commands = array('Install', 'Name', 'Uninstall', 'Migrations', 'Create', 'Drop', 'Migrate', 'Rollback', 'Reset', 'Refresh');
 
 		foreach($commands as $command)
 		{
@@ -120,7 +121,8 @@ class DatabaseServiceProvider extends ServiceProvider {
 			'command.tenant.drop',
 			'command.tenant.migrate',
 			'command.tenant.rollback',
-			'command.tenant.reset'
+			'command.tenant.reset',
+			'command.tenant.refresh'
 		);
 	}
 
@@ -199,6 +201,16 @@ class DatabaseServiceProvider extends ServiceProvider {
 			$packagePath = $app['path.base'].'/vendor';
 
 			return new TenantRollbackCommand($app['stillat.database.tenant.migrator'], $packagePath);
+		});
+	}
+
+	public function registerTenantRefreshCommand()
+	{
+		$this->app->bindShared('command.tenant.refresh', function($app)
+		{
+			$packagePath = $app['path.base'].'/vendor';
+
+			return new TenantRefreshCommand($app['stillat.database.tenant.migrator'], $packagePath);
 		});
 	}
 

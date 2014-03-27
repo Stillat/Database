@@ -68,7 +68,25 @@ class RefreshCommand extends Command {
 	 */
 	public function fire()
 	{
+		$pretend = $this->input->getOption('pretend');
+		$path    = $this->input->getOption('path', null);
 
+		$this->call('tenant:reset', array('--path' => $path, '--pretend' => $pretend));
+		$this->call('tenant:migrate', array('--path' => $path, '--pretend' => $pretend));
 	}
+
+	/**
+	 * Get the console command options.
+	 *
+	 * @return array
+	 */
+	protected function getOptions()
+	{
+		return array(
+			array('pretend', null, InputOption::VALUE_NONE, 'Dump the SQL queries that would be run.'),
+			array('path', null, InputOption::VALUE_OPTIONAL, 'The path to migration files', null)
+			);
+	}
+
 
 }
