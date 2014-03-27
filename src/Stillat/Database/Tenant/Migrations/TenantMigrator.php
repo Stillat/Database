@@ -143,15 +143,45 @@ class TenantMigrator extends Migrator {
 	 */
 	public function rollback($pretend = false)
 	{
+		$tenants = $this->manager->getRepository()->getTenants();
+		$migrationsFileList = array();
+
 		if ($this->usePath)
 		{
-			$this->note('<info>Rollback command initiated with path '.$this->path.'</info>');
+			$this->note('<info>Rollback command initiated with path "'.$this->path.'"</info>');
+			$migrationsFileList = $this->includeMigrations($this->path);
 		}
-	}
 
-	public function tenantRollback($pretend, $tenant, $path = null)
-	{
+		$everyMigration = 0;
 
+		foreach($tenants as $tenant)
+		{
+			$this->manager->bootstrapConnectionByTenantName($tenant->tenant_name);
+			$this->note('<info>Bootstrapped connection for:</info> '.$tenant->tenant_name);
+
+			$this->setConnection($tenant->tenant_name);
+			$this->repository->setSource($tenant->tenant_name);
+
+			$migrations = $this->repository->getLast();
+
+			if (count($migrations) == 0)
+			{
+				// Move on to the next tenant.
+				$this->note('<info>Nothing to rollback on "'.$tenant->tenant_name.'".</info>');
+				continue;
+			}
+
+			foreach($migrations as $migration)
+			{
+				$this->note('<info>Rolling back "'.$migration->migration.'".</info>');
+				$this->runDown((object) $migration, $pretend);
+			}
+
+			$everyMigration += count($migrations);
+
+		}
+
+		return $everyMigration;
 	}
 
 }
