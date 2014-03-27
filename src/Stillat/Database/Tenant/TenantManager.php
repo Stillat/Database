@@ -107,6 +107,13 @@ class TenantManager {
 	public static $acceptedMigrationBehaviors = array('only', 'exclude');
 
 	/**
+	 * The default connection as determined by Laravel.
+	 * 
+	 * @var string
+	 */
+	protected $laravelDefaultConnection = '';
+
+	/**
 	 * Returns a new instance of the tenant manager.
 	 * 
 	 * @param Application               $app
@@ -168,6 +175,8 @@ class TenantManager {
 			$dataConnections = $configuration->get(self::CONFIGURATION_KEY_NAME_PREFIX);
 			$defaultConnection = $dataConnections[$configuration->get(self::CONFIGURATION_DEFAULT_CONNECTION_NAME)];
 
+			$this->laravelDefaultConnection = $defaultConnection;
+
 			$tenantConnectionSettings = array();
 
 			if ($this->preserveReadWriteConfiguration)
@@ -204,43 +213,7 @@ class TenantManager {
 	 */
 	protected function bootstrapConnection($accountID)
 	{
-		$tenantName = $this->getTierNameWithPrefix($accountID);
-
-		if (in_array($tenantName, $this->tenantConnections) == false)
-		{
-			$connectionKey = self::CONFIGURATION_KEY_NAME_PREFIX.'.'.$tenantName;
-
-			$configuration = $this->app['config'];
-
-			$dataConnections = $configuration->get(self::CONFIGURATION_KEY_NAME_PREFIX);
-			$defaultConnection = $dataConnections[$configuration->get(self::CONFIGURATION_DEFAULT_CONNECTION_NAME)];
-
-			$tenantConnectionSettings = array();
-
-			if ($this->preserveReadWriteConfiguration)
-			{
-				// If the user knows what they are doing and really wants to preserve the
-				// read/write server settings, just let them.
-				$tenantConnectionSettings = $defaultConnection;
-			}
-			else
-			{
-				// Remove the read and write configuration settings if they exist. It doesn't make sense
-				// to use the default connections read/write settings if the user will be connecting to
-				// their own database and connection.
-				$tenantConnectionSettings = array_except($defaultConnection, array('read', 'write'));
-			}
-
-			// This simply overrides the database name.
-			$tenantConnectionSettings['database'] = $tenantName;
-
-			// This will build the new database connection for the request.
-			$this->app['config']->set($connectionKey, $tenantConnectionSettings);
-
-			$this->tenantConnections[] = $tenantName;
-		}
-
-		return $tenantName;
+		return $this->bootstrapConnectionByTenantName($this->getTierNameWithPrefix($accountID));
 	}
 
 	/**
