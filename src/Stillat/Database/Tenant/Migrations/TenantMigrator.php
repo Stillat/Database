@@ -28,6 +28,13 @@ class TenantMigrator extends Migrator {
 	protected $path = '';
 
 	/**
+	 * The currently available tenants.
+	 * 
+	 * @var array
+	 */
+	protected $tenants = null;
+
+	/**
 	 * Returns a new TenantMigrator instance.
 	 * 
 	 * @param MigrationRepositoryInterface $repository
@@ -47,6 +54,7 @@ class TenantMigrator extends Migrator {
 
 		parent::__construct($repository, $resolver, $files);
 	}
+
 
 	public function includeMigrations($path)
 	{
@@ -88,6 +96,21 @@ class TenantMigrator extends Migrator {
 	}
 
 	/**
+	 * Retrieves a list of all available tenants.
+	 * 
+	 * @return array
+	 */
+	protected function getTenants()
+	{
+		if ($this->tenants == null)
+		{
+			$this->tenants = $this->manager->getRepository()->getTenants();
+		}
+
+		return $this->tenants;
+	}
+
+	/**
 	 * Run the outstanding migrations at a given path.
 	 *
 	 * @param  string  $path
@@ -96,7 +119,7 @@ class TenantMigrator extends Migrator {
 	 */
 	public function run($path, $pretend = false)
 	{
-		$tenants = $this->manager->getRepository()->getTenants();
+		$tenants = $this->getTenants();
 
 		$migrationsFileList = $this->includeMigrations($path);
 
@@ -143,7 +166,7 @@ class TenantMigrator extends Migrator {
 	 */
 	public function rollback($pretend = false)
 	{
-		$tenants = $this->manager->getRepository()->getTenants();
+		$tenants = $this->getTenants();
 		$migrationsFileList = array();
 
 		if ($this->usePath)
