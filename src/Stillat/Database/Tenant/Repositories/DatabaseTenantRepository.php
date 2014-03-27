@@ -204,7 +204,7 @@ class DatabaseTenantRepository extends BaseRepository implements TenantRepositor
 	 */
 	public function removeTenant($tenantID)
 	{
-		$this->table()->where('tenant_name', '=', $tenantID)->delete();
+		$this->getTable()->where('tenant_name', '=', $tenantID)->delete();
 	}
 
 }
