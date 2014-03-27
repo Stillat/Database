@@ -28,7 +28,7 @@ class NameCommand extends Command {
 	 */
 	public function fire()
 	{
-		$tenantManager = $this->laravel['common.tenant'];
+		$tenantManager = $this->laravel['stillat.database.tenant'];
 		$this->info($tenantManager->getTierNameWithPrefix($this->argument('name')));
 	}
 
