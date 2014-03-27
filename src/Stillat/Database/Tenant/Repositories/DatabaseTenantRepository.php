@@ -87,7 +87,7 @@ class DatabaseTenantRepository extends BaseRepository implements TenantRepositor
 
 		$schema = $this->getConnection()->getSchemaBuilder();
 
-		$schema->create($this->tableName, function($table)
+		$schema->create($this->table, function($table)
 		{
 			$table->increments('id');
 			$table->string('tenant_name')->default('')->unique();
@@ -98,9 +98,9 @@ class DatabaseTenantRepository extends BaseRepository implements TenantRepositor
 		$schema->create($this->tenantAccountTable, function($table) use ($usersTable)
 		{
 			$table->increments('id');
-			$table->integer(str_singular($this->tableName).'_id')->unsigned();
+			$table->integer(str_singular($this->table).'_id')->unsigned();
 			$table->integer(str_singular($usersTable).'_id')->unsigned();
-			$table->index(str_singular($this->tableName).'_id');
+			$table->index(str_singular($this->table).'_id');
 			$table->index(str_singular($usersTable).'_id');
 		});
 	}
@@ -114,8 +114,18 @@ class DatabaseTenantRepository extends BaseRepository implements TenantRepositor
 	{
 		$schema = $this->getConnection()->getSchemaBuilder();
 
-		$schema->drop($this->tableName);
+		$schema->drop($this->table);
 		$schema->drop($this->tenantAccountTable);
+	}
+
+	/**
+	 * Resolve the database connection instance.
+	 *
+	 * @return \Illuminate\Database\Connection
+	 */
+	public function getConnection()
+	{
+		return $this->resolver->connection($this->connectionName);
 	}
 
 	/**
