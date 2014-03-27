@@ -47,7 +47,7 @@ class InstallCommand extends Command {
 	 */
 	public function fire()
 	{
-		$this->repository->setSource($this->input->getOption('database'));
+		$this->repository->setConnection($this->input->getOption('database'));
 
 		$this->repository->createRepository();
 
