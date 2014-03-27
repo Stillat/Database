@@ -34,4 +34,11 @@ class TenantManager {
 	 */
 	const CONFIGURATION_DEFAULT_CONNECTION_NAME = 'database.default';
 
+	/**
+	 * The fully qualified name of the Laravel migration base class.
+	 *
+	 * @var string
+	 */
+	const LARAVEL_MIGRATION_BASE_CLASS = 'Illuminate\Database\Migrations\Migration';
+
 }
