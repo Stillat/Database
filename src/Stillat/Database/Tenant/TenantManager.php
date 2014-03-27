@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Application;
 use Stillat\Common\Exceptions\InvalidArgumentException;
 use Stillat\Database\SchemaCreator\SchemaCreatorManager;
+use Stillat\Database\Tenant\Repositories\TenantRepositoryInterface;
 
 class TenantManager {
 
