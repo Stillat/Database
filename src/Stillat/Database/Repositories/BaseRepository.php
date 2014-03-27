@@ -17,7 +17,7 @@ abstract class BaseRepository implements RepositoryInterface {
 	 * @param  array  $recordDetails
 	 * @return mixed
 	 */
-	abstract public function create(array $recordDetails);
+	abstract public function create(array $recordDetails = array());
 
 	/**
 	 * Removes an existing record.
@@ -25,7 +25,7 @@ abstract class BaseRepository implements RepositoryInterface {
 	 * @param  array  $removeDetails
 	 * @return mixed
 	 */
-	abstract public function remove(array $removeDetails);
+	abstract public function remove(array $removeDetails = array());
 
 
 	/**

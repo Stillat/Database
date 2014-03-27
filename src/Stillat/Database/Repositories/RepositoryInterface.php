@@ -8,7 +8,7 @@ interface RepositoryInterface {
 	 * @param  array  $recordDetails
 	 * @return mixed
 	 */
-	public function create(array $recordDetails);
+	public function create(array $recordDetails = array());
 
 	/**
 	 * Removes an existing record.
@@ -16,7 +16,7 @@ interface RepositoryInterface {
 	 * @param  array  $removeDetails
 	 * @return mixed
 	 */
-	public function remove(array $removeDetails);
+	public function remove(array $removeDetails = array());
 
 
 	/**
