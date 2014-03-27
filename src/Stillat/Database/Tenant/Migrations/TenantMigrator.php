@@ -23,6 +23,10 @@ class TenantMigrator extends Migrator {
 	 */
 	protected $tenantMigrationResolver;
 
+	protected $usePath = false;
+
+	protected $path = '';
+
 	/**
 	 * Returns a new TenantMigrator instance.
 	 * 
@@ -32,9 +36,9 @@ class TenantMigrator extends Migrator {
 	 * @param TenantManager                $manager
 	 */
 	public function __construct(MigrationRepositoryInterface $repository,
-								Resolver $resolver,
-								Filesystem $files,
-								TenantManager $manager)
+		Resolver $resolver,
+		Filesystem $files,
+		TenantManager $manager)
 	{
 		$this->manager = $manager;
 
@@ -44,17 +48,8 @@ class TenantMigrator extends Migrator {
 		parent::__construct($repository, $resolver, $files);
 	}
 
-	/**
-	 * Run the outstanding migrations at a given path.
-	 *
-	 * @param  string  $path
-	 * @param  bool    $pretend
-	 * @return void
-	 */
-	public function run($path, $pretend = false)
+	public function includeMigrations($path)
 	{
-		$tenants = $this->manager->getRepository()->getTenants();
-
 		$migrationsFileList = array();
 
 		$configuredMigrations = $this->manager->getTenantMigrations();
@@ -82,6 +77,28 @@ class TenantMigrator extends Migrator {
 		}
 
 		$this->requireFiles($path, $migrationsFileList);
+
+		return $migrationsFileList;
+	}
+
+	public function usePath($path)
+	{
+		$this->usePath = true;
+		$this->path = $path;
+	}
+
+	/**
+	 * Run the outstanding migrations at a given path.
+	 *
+	 * @param  string  $path
+	 * @param  bool    $pretend
+	 * @return void
+	 */
+	public function run($path, $pretend = false)
+	{
+		$tenants = $this->manager->getRepository()->getTenants();
+
+		$migrationsFileList = $this->includeMigrations($path);
 
 
 		$this->note('Assembling tenant migrations list...');
@@ -126,45 +143,15 @@ class TenantMigrator extends Migrator {
 	 */
 	public function rollback($pretend = false)
 	{
-		$this->notes = array();
-
-
-		$tenants = $this->manager->getRepository()->getTenants();
-
-		$totalMigrations = 0;
-
-		foreach ($tenants as $tenant)
+		if ($this->usePath)
 		{
-			$this->manager->bootstrapConnectionByTenantName($tenant->tenant_name);
-			$this->setConnection($tenant->tenant_name);
-			$this->repository->setSource($tenant->tenant_name);
-			$this->note('<info>Bootstrapped connection for:</info> '.$tenant->tenant_name);
-
-			// We want to pull in the last batch of migrations that ran on the previous
-			// migration operation. We'll then reverse those migrations and run each
-			// of them "down" to reverse the last migration "operation" which ran.
-			$migrations = $this->repository->getLast();
-
-			if (count($migrations) == 0)
-			{
-				$this->note('<info>Nothing to rollback.</info>');
-
-				return count($migrations);
-			}
-
-			// We need to reverse these migrations so that they are "downed" in reverse
-			// to what they run on "up". It lets us backtrack through the migrations
-			// and properly reverse the entire database schema operation that ran.
-			foreach ($migrations as $migration)
-			{
-				$this->runDown((object) $migration, $pretend);
-			}
-
-			$totalMigrations = count($migrations);
-
+			$this->note('<info>Rollback command initiated with path '.$this->path.'</info>');
 		}
+	}
 
-		return $totalMigrations;
+	public function tenantRollback($pretend, $tenant, $path = null)
+	{
+
 	}
 
 }

@@ -49,22 +49,30 @@ class ResetCommand extends Command {
 	 */
 	public function fire()
 	{
+
+		$tenantManager = $this->laravel['stillat.database.tenant'];
+		$tenants = $tenantManager->getRepository()->getTenants();
+
 		$pretend = $this->input->getOption('pretend');
 
-		while(true)
+		$path    = $this->input->getOption('path', null);
+
+		foreach ($tenants as $tenant)
 		{
-			$count = $this->migrator->rollback($pretend);
-
-			// Once the migrator has run we will grab the note output and send it out to
-			// the console screen, since the migrator itself functions without having
-			// any instances of the OutputInterface contract passed into the class.
-			foreach ($this->migrator->getNotes() as $note)
+			while (true)
 			{
-				$this->output->writeln($note);
-			}
+				$count = $this->migrator->tenantRollback($pretend, $tenant, $path);
 
-			if ($count == 0) break;	
+				foreach ($this->migrator->getNotes() as $note)
+				{
+					$this->output->writeln($note);
+				}
+
+				if ($count == 0) break;
+			}
 		}
+
+
 	}
 
 	/**
@@ -76,6 +84,7 @@ class ResetCommand extends Command {
 	{
 		return array(
 			array('pretend', null, InputOption::VALUE_NONE, 'Dump the SQL queries that would be run.'),
+			array('path', null, InputOption::VALUE_OPTIONAL, 'The path to migration files', null)
 		);
 	}
 

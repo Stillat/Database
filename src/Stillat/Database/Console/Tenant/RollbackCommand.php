@@ -50,6 +50,12 @@ class RollbackCommand extends Command {
 	public function fire()
 	{
 		$pretend = $this->input->getOption('pretend');
+		$path	 = $this->input->getOption('path', null);
+
+		if ($path !== null)
+		{
+			$this->migrator->usePath($path);
+		}
 
 		$this->migrator->rollback($pretend);
 
@@ -70,8 +76,8 @@ class RollbackCommand extends Command {
 	protected function getOptions()
 	{
 		return array(
-
 			array('pretend', null, InputOption::VALUE_NONE, 'Dump the SQL queries that would be run.'),
+			array('path', null, InputOption::VALUE_OPTIONAL, 'The path to migration files.', null),
 		);
 	}
 
