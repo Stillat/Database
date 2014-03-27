@@ -1,7 +1,7 @@
 <?php namespace Stillat\Database\Repositories;
 
 use Illuminate\Support\Facades\DB;
-use Stillat\Database\Repositories\RepositoryInterface
+use Stillat\Database\Repositories\RepositoryInterface;
 
 abstract class BaseRepository implements RepositoryInterface {
 
