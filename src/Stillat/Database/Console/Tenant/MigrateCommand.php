@@ -1,4 +1,4 @@
-<?php namespace Stillat\Common\Database\Console\Tenant;
+<?php namespace Stillat\Database\Console\Tenant;
 
 use Illuminate\Database\Console\Migrations\BaseCommand as Command;
 use Symfony\Component\Console\Input\InputOption;
