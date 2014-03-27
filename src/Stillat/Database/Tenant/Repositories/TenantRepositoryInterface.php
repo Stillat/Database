@@ -3,6 +3,20 @@
 interface TenantRepositoryInterface {
 
 	/**
+	 * Creates the tenant repository.
+	 * 
+	 * @return mixed
+	 */
+	public function createRepository();
+
+	/**
+	 * Removes the tenant repository.
+	 * 
+	 * @return mixed
+	 */
+	public function removeRepository();
+
+	/**
 	 * Gets a specific tenant by ID.
 	 * 
 	 * @param  int   $tenantID
@@ -41,5 +55,14 @@ interface TenantRepositoryInterface {
 	 * @return array
 	 */
 	public function getUserTenants($userID);
+
+	/**
+	 * Removes a user from a tenant.
+	 * 
+	 * @param  int   $userID
+	 * @param  int   $tenantID
+	 * @return mixed
+	 */
+	public function removeUserFromTenant($userID, $tenantID);
 
 }

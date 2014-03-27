@@ -62,7 +62,7 @@ abstract class BaseRepository implements RepositoryInterface {
 	 */
 	public function getConnection()
 	{
-		retrun $this->connectionName;
+		return $this->connectionName;
 	}
 
 	/**
