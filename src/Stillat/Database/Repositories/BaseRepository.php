@@ -1,5 +1,6 @@
 <?php namespace Stillat\Database\Repositories;
 
+use Illuminate\Support\Facades\DB;
 use Stillat\Database\Repositories\RepositoryInterface
 
 abstract class BaseRepository implements RepositoryInterface {
@@ -10,6 +11,13 @@ abstract class BaseRepository implements RepositoryInterface {
 	 * @var string
 	 */
 	protected $connectionName = '';
+
+	/**
+	 * The name of the database table this repository represents.
+	 * 
+	 * @var string
+	 */
+	protected $table = '';
 
 	/**
 	 * Creates a new record.
@@ -55,6 +63,16 @@ abstract class BaseRepository implements RepositoryInterface {
 	public function getConnection()
 	{
 		retrun $this->connectionName;
+	}
+
+	/**
+	 * Returns a query builder instance for the table.
+	 * 
+	 * @return \Illuminate\Database\Query\Builder
+	 */
+	public function getTable()
+	{
+		return DB::connection($this->connectionName)->table($this->table);
 	}
 
 }
