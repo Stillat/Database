@@ -163,6 +163,11 @@ class TenantManager {
 				$this->addMigration($migration);
 			}
 		}
+
+
+		// Set the default Laravel connection name.
+		$this->laravelDefaultConnection = $this->app['config']->get('database.default');
+
 	}
 
 	/**
@@ -181,9 +186,6 @@ class TenantManager {
 
 			$dataConnections = $configuration->get(self::CONFIGURATION_KEY_NAME_PREFIX);
 			$defaultConnection = $dataConnections[$configuration->get(self::CONFIGURATION_DEFAULT_CONNECTION_NAME)];
-
-			$this->laravelDefaultConnection = $defaultConnection;
-
 
 			$tenantConnectionSettings = array();
 
@@ -250,6 +252,16 @@ class TenantManager {
 	public function restoreTenant()
 	{
 		$this->app['session']->put(self::TENANT_SESSION_DIRECTIVE_NAME, $this->restorableConnection);
+	}
+
+	/**
+	 * Restores the default Laravel connection.
+	 * 
+	 * @return void
+	 */
+	public function restoreLaravel()
+	{
+		$this->app['config']->set('database.default', $this->laravelDefaultConnection);
 	}
 
 	/**
