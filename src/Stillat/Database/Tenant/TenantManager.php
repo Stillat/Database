@@ -400,7 +400,7 @@ class TenantManager {
 	/**
 	 * Returns the internal SchemaCreatorManager instance.
 	 *
-	 * @return \Stillat\Common\Database\Tenant\SchemaCreator\SchemaCreatorManager
+	 * @return \Stillat\Database\SchemaCreator\SchemaCreatorManager
 	 */
 	public function getSchemaManager()
 	{

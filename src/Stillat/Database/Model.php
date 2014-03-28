@@ -67,7 +67,7 @@ abstract class Model extends Ardent {
 	/**
 	 * Returns the next record.
 	 *
-	 * @return Stillat\Common\Database\Model
+	 * @return Stillat\Database\Model
 	 */
 	public function next()
 	{
@@ -77,7 +77,7 @@ abstract class Model extends Ardent {
 	/**
 	 * Returns the previous record.
 	 *
-	 * @return Stillat\Common\Database\Model
+	 * @return Stillat\Database\Model
 	 */
 	public function previous()
 	{
