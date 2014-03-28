@@ -1,6 +1,7 @@
 {
     "name": "stillat/database",
     "description": "Provides advanced database features, such as multiple-tenant database architecture.",
+    "license": "MIT",
     "authors": [
         {
             "name": "Johnathon Koster",
