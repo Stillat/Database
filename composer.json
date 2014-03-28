@@ -12,7 +12,7 @@
         "php": ">=5.3.0",
         "illuminate/support": "4.1.*",
         "stillat/common": "1.*",
-        "laravelbook/ardent": "v2.4.2"
+        "laravelbook/ardent": "2.*"
     },
     "autoload": {
         "classmap": [
