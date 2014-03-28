@@ -114,6 +114,13 @@ class TenantManager {
 	protected $laravelDefaultConnection = '';
 
 	/**
+	 * The connection to restore, if any.
+	 * 
+	 * @var string
+	 */
+	protected $restorableConnection = '';
+
+	/**
 	 * Returns a new instance of the tenant manager.
 	 * 
 	 * @param Application               $app
@@ -221,10 +228,26 @@ class TenantManager {
 	 * to the account with the given account ID.
 	 *
 	 * @param int $accountID
+	 * @param bool $restorable
 	 */
-	public function assumeTenant($accountID)
+	public function assumeTenant($accountID, $restorable = false)
 	{
+		if ($restorable)
+		{
+			$this->restorableConnection = $this->getCurrentConnection();
+		}
+
 		$this->app['session']->put(self::TENANT_SESSION_DIRECTIVE_NAME, $this->bootstrapConnection($accountID));
+	}
+
+	/**
+	 * Restores the previous tenant connection.
+	 * 
+	 * @return void
+	 */
+	public function restoreTenant()
+	{
+		$this->app['session']->put(self::TENANT_SESSION_DIRECTIVE_NAME, $this->restorableConnection);
 	}
 
 	/**
@@ -398,7 +421,7 @@ class TenantManager {
 	public static function instance()
 	{
 		$application = app();
-		return $application->make('common.tenant');
+		return $application->make('stillat.database.tenant');
 	}
 
 }
