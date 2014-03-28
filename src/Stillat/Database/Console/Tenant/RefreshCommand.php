@@ -2,8 +2,8 @@
 
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
-use Stillat\Database\Tenant\Migrations\TenantMigrator;
 use Stillat\Database\Tenant\TenantManager as Manager;
+use Stillat\Database\Tenant\Migrations\TenantMigrator;
 use Stillat\Database\Tenant\Migrations\TenantMigrationResolver;
 
 class RefreshCommand extends Command {
@@ -25,7 +25,7 @@ class RefreshCommand extends Command {
 	/**
 	 * The migrator instance.
 	 *
-	 * @var \Stillat\Common\Database\Tenant\TenantMigrator
+	 * @var \Stillat\Database\Tenant\TenantMigrator
 	 */
 	protected $migrator;
 
@@ -39,16 +39,16 @@ class RefreshCommand extends Command {
 	/**
 	 * The tenant migration resolver instance.
 	 *
-	 * @var \Stillat\Common\Database\Tenant\Migrations\TenantMigrationResolver
+	 * @var \Stillat\Database\Tenant\Migrations\TenantMigrationResolver
 	 */
 	protected $tenantMigrationResolver;
 
 	/**
 	 * Create a new tenant migrations refresh instance.
 	 *
-	 * @param  \Stillat\Common\Database\Tenant\Migrations\TenantMigrator  $migrator
+	 * @param  \Stillat\Database\Tenant\Migrations\TenantMigrator  $migrator
 	 * @param  string  $packagePath
-	 * @return \Stillat\Common\Database\Tenant\Migrations\RefreshCommand
+	 * @return \Stillat\Database\Tenant\Migrations\RefreshCommand
 	 */
 	public function __construct(TenantMigrator $migrator, $packagePath)
 	{

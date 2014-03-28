@@ -2,8 +2,8 @@
 
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
-use Stillat\Database\Tenant\DatabaseTenantRepository;
 use Symfony\Component\Console\Input\InputArgument;
+use Stillat\Database\Tenant\DatabaseTenantRepository;
 
 class NameCommand extends Command {
 

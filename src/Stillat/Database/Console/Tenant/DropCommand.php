@@ -1,10 +1,10 @@
 <?php namespace Stillat\Database\Console\Tenant;
 
-use Illuminate\Console\Command;
-use Symfony\Component\Console\Input\InputOption;
-use Stillat\Database\Tenant\TenantManager;
-use Symfony\Component\Console\Input\InputArgument;
 use Exception;
+use Illuminate\Console\Command;
+use Stillat\Database\Tenant\TenantManager;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Input\InputArgument;
 
 class DropCommand extends Command {
 
@@ -41,6 +41,11 @@ class DropCommand extends Command {
 		}
 	}
 
+	/**
+	 * Get the console command options.
+	 *
+	 * @return array
+	 */
 	protected function getArguments()
 	{
 		return array(

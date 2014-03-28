@@ -1,10 +1,10 @@
 <?php namespace Stillat\Database\Console\Tenant;
 
-use Illuminate\Database\Console\Migrations\BaseCommand as Command;
-use Symfony\Component\Console\Input\InputOption;
 use Illuminate\Database\Migrations\Migrator;
+use Symfony\Component\Console\Input\InputOption;
 use Stillat\Database\Tenant\TenantManager as Manager;
 use Stillat\Database\Tenant\Migrations\TenantMigrationResolver;
+use Illuminate\Database\Console\Migrations\BaseCommand as Command;
 
 class MigrationsCommand extends Command {
 
@@ -25,7 +25,7 @@ class MigrationsCommand extends Command {
 	/**
 	 * The manager instance.
 	 *
-	 * @var \Stillat\Common\Database\Tenant\TenantManager
+	 * @var \Stillat\Database\Tenant\TenantManager
 	 */
 	protected $manager;
 
@@ -46,14 +46,14 @@ class MigrationsCommand extends Command {
 	/**
 	 * The tenant migration resolver instance.
 	 *
-	 * @var \Stillat\Common\Database\Tenant\Migrations\TenantMigrationResolver
+	 * @var \Stillat\Database\Tenant\Migrations\TenantMigrationResolver
 	 */
 	protected $tenantMigrationResolver;
 
 	/**
 	 * Create a new tenant migrations command instance.
 	 *
-	 * @param  \Stillat\Common\Database\Tenant\TenantManager  $manager
+	 * @param  \Stillat\Database\Tenant\TenantManager  $manager
 	 * @param  \Illuminate\Database\Migrations\Migrator  $migrator
 	 * @param  string  $packagePath
 	 * @return void

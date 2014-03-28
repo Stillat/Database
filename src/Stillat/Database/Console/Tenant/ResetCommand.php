@@ -2,8 +2,8 @@
 
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
-use Stillat\Database\Tenant\Migrations\TenantMigrator;
 use Stillat\Database\Tenant\TenantManager as Manager;
+use Stillat\Database\Tenant\Migrations\TenantMigrator;
 use Stillat\Database\Tenant\Migrations\TenantMigrationResolver;
 
 class ResetCommand extends Command {
@@ -25,14 +25,14 @@ class ResetCommand extends Command {
 	/**
 	 * The migrator instance.
 	 *
-	 * @var \Stillat\Common\Database\Tenant\Migrations\TenantMigrator
+	 * @var \Stillat\Database\Tenant\Migrations\TenantMigrator
 	 */
 	protected $migrator;
 
 	/**
 	 * Create a new tenant migration rollback command instance.
 	 *
-	 * @param  \Stillat\Common\Database\Tenant\Migrations\TenantMigrator  $migrator
+	 * @param  \Stillat\Database\Tenant\Migrations\TenantMigrator  $migrator
 	 * @return void
 	 */
 	public function __construct(TenantMigrator $migrator)

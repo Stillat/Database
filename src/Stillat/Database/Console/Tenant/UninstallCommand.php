@@ -23,14 +23,14 @@ class UninstallCommand extends Command {
 	/**
 	 * The repository instance.
 	 *
-	 * @var \Stillat\Common\Database\Tenant\DatabaseTenantRepository
+	 * @var \Stillat\Database\Tenant\DatabaseTenantRepository
 	 */
 	protected $repository;
 
 	/**
 	 * Create a new tenant uninstall command instance.
 	 *
-	 * @param  \Stillat\Common\Database\Tenant\DatabaseTenantRepository  $repository
+	 * @param  \Stillat\Database\Tenant\DatabaseTenantRepository  $repository
 	 * @return void
 	 */
 	public function __construct(DatabaseTenantRepository $repository)

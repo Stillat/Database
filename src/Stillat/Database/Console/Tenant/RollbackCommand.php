@@ -1,10 +1,10 @@
 <?php namespace Stillat\Database\Console\Tenant;
 
-use Illuminate\Database\Console\Migrations\BaseCommand as Command;
 use Symfony\Component\Console\Input\InputOption;
-use Stillat\Database\Tenant\Migrations\TenantMigrator;
 use Stillat\Database\Tenant\TenantManager as Manager;
+use Stillat\Database\Tenant\Migrations\TenantMigrator;
 use Stillat\Database\Tenant\Migrations\TenantMigrationResolver;
+use Illuminate\Database\Console\Migrations\BaseCommand as Command;
 
 class RollbackCommand extends Command {
 
@@ -25,7 +25,7 @@ class RollbackCommand extends Command {
 	/**
 	 * The migrator instance.
 	 *
-	 * @var \Stillat\Common\Database\Tenant\TenantMigrator
+	 * @var \Stillat\Database\Tenant\TenantMigrator
 	 */
 	protected $migrator;
 
