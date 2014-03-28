@@ -3,7 +3,6 @@
 use Exception;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
-use Stillat\Common\Database\Tenant\TenantManager;
 use Symfony\Component\Console\Input\InputArgument;
 
 class CreateCommand extends Command {
