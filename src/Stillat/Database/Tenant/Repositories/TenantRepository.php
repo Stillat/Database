@@ -3,7 +3,7 @@
 use Stillat\Database\Tenant\TenantManager;
 use Stillat\Database\Repositories\BaseRepository;
 
-class TenantRepository extends BaseRepository {
+abstract class TenantRepository extends BaseRepository {
 
 	/**
 	 * Returns a new instance of TenantRepository
