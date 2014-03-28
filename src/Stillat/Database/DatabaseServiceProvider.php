@@ -7,6 +7,7 @@ use Illuminate\Database\Migrations\Migrator;
 use Stillat\Database\Tenant\Migrations\TenantMigrator;
 use Stillat\Database\SchemaCreator\SchemaCreatorManager;
 use Stillat\Database\Tenant\Repositories\DatabaseTenantRepository;
+use Stillat\Database\Console\Tenant\SeedCommand as TenantSeedCommand;
 use Stillat\Database\Console\Tenant\NameCommand as TenantNameCommand;
 use Stillat\Database\Console\Tenant\DropCommand as TenantDropCommand;
 use Stillat\Database\Console\Tenant\ResetCommand as TenantResetCommand;
@@ -105,7 +106,7 @@ class DatabaseServiceProvider extends ServiceProvider {
 	 */
 	public function registerTenantCommands()
 	{
-		$commands = array('Install', 'Name', 'Uninstall', 'Migrations', 'Create', 'Drop', 'Migrate', 'Rollback', 'Reset', 'Refresh');
+		$commands = array('Install', 'Name', 'Uninstall', 'Migrations', 'Create', 'Drop', 'Migrate', 'Rollback', 'Reset', 'Refresh', 'Seed');
 
 		foreach($commands as $command)
 		{
@@ -122,7 +123,8 @@ class DatabaseServiceProvider extends ServiceProvider {
 			'command.tenant.migrate',
 			'command.tenant.rollback',
 			'command.tenant.reset',
-			'command.tenant.refresh'
+			'command.tenant.refresh',
+			'command.tenant.seed'
 		);
 	}
 
@@ -211,6 +213,14 @@ class DatabaseServiceProvider extends ServiceProvider {
 			$packagePath = $app['path.base'].'/vendor';
 
 			return new TenantRefreshCommand($app['stillat.database.tenant.migrator'], $packagePath);
+		});
+	}
+
+	public function registerTenantSeedCommand()
+	{
+		$this->app->bindShared('command.tenant.seed', function($app)
+		{
+			return new TenantSeedCommand($app['db'], $app['stillat.database.tenant']);
 		});
 	}
 
