@@ -73,6 +73,31 @@ class RefreshCommand extends Command {
 
 		$this->call('tenant:reset', array('--path' => $path, '--pretend' => $pretend));
 		$this->call('tenant:migrate', array('--path' => $path, '--pretend' => $pretend));
+
+		$this->laravel['stillat.database.tenant']->restoreLaravel();
+
+		if ($this->needsSeeding())
+		{
+			$this->runSeeder();
+		}
+
+	}
+
+	/**
+	 * Determine if the developer has requested database seeding.
+	 * 
+	 * @return bool
+	 */
+	protected function needsSeeding()
+	{
+		return $this->option('seed') || $this->option('seeder');
+	}
+
+	protected function runSeeder()
+	{
+		$class = $this->option('seeder') ?: 'TenantDatabaseSeeder';
+
+		$this->call('tenant:seed', array('--class' => $class));
 	}
 
 	/**
@@ -84,8 +109,10 @@ class RefreshCommand extends Command {
 	{
 		return array(
 			array('pretend', null, InputOption::VALUE_NONE, 'Dump the SQL queries that would be run.'),
+			array('seed', null, InputOption::VALUE_NONE, 'Indicates if the tenant seed task should be re-run'),
+			array('seeder', null, InputOption::VALUE_OPTIONAL, 'The class name of the root seeder'),
 			array('path', null, InputOption::VALUE_OPTIONAL, 'The path to migration files', null)
-			);
+		);
 	}
 
 
