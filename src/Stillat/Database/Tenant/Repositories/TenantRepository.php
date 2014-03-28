@@ -10,8 +10,6 @@ abstract class TenantRepository extends BaseRepository {
 	 */
 	public function __construct()
 	{
-		parent::__construct();
-
 		$tenantManager = TenantManager::instance();
 		$this->setConnection($tenantManager->getCurrentConnection());
 		unset($tenantManager);
