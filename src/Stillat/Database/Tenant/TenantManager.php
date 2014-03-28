@@ -135,12 +135,12 @@ class TenantManager {
 
 		$this->tenantRepository = $repository;
 
-		$this->schemaPrefix = $this->app['config']->get('common::tenants.schemaPrefix', '');
+		$this->schemaPrefix = $this->app['config']->get('stillat::tenants.schemaPrefix', '');
 
-		$this->preserveReadWriteConfiguration = $this->app['config']->get('common::tenants.preserveReadWrite', false);
+		$this->preserveReadWriteConfiguration = $this->app['config']->get('stillat::tenants.preserveReadWrite', false);
 
 		// Get the migration behavior from the tenant configuration file.
-		$this->migrationBehavior = $this->app['config']->get('common::tenants.migrationBehavior', 'exclude');
+		$this->migrationBehavior = $this->app['config']->get('stillat::tenants.migrationBehavior', 'exclude');
 
 		// Just convert the migration behavior to lower-case.
 		$this->migrationBehavior = strtolower($this->migrationBehavior);
@@ -154,7 +154,7 @@ class TenantManager {
 
 		// Check to see if there are any migrations listed in the tenant configuration file. If there are,
 		// try and add them.
-		$tenantMigrationCollection = $this->app['config']->get('common::tenants.migrations', null);
+		$tenantMigrationCollection = $this->app['config']->get('stillat::tenants.migrations', null);
 
 		if ($tenantMigrationCollection !== null and is_array($tenantMigrationCollection) and count($tenantMigrationCollection) > 0)
 		{
@@ -184,6 +184,7 @@ class TenantManager {
 
 			$this->laravelDefaultConnection = $defaultConnection;
 
+
 			$tenantConnectionSettings = array();
 
 			if ($this->preserveReadWriteConfiguration)
@@ -205,6 +206,7 @@ class TenantManager {
 
 			// This will build the new database connection for the request.
 			$this->app['config']->set($connectionKey, $tenantConnectionSettings);
+
 			$this->tenantConnections[] = $tenantName;
 		}
 
