@@ -36,7 +36,7 @@ abstract class Model extends Ardent {
 	 */
 	public function scopeOrder($query)
 	{
-		if ($this->orderBy[0] !=== null and $this->orderBy[1] !=== null)
+		if ($this->orderBy[0] !== null and $this->orderBy[1] !== null)
 		{
 			return $query->orderBy($this->orderBy[0], $this->orderBy[1]);
 		}
