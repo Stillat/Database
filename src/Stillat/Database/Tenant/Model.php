@@ -33,7 +33,7 @@ class Model extends StillatModel {
 	protected static function makeValidator($data, $rules, $customMessages)
 	{
 
-		$manager = Manager::instance();
+		$manager = TenantManager::instance();
 		$tenantConnection = $manager->getCurrentConnection();
 		unset($manager);
 
