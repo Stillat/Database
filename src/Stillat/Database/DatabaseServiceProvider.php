@@ -35,7 +35,7 @@ class DatabaseServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		$this->package('stillat/database', 'stillat');
+		$this->package('stillat/database', 'stillat-database');
 	}
 
 	/**
@@ -64,8 +64,8 @@ class DatabaseServiceProvider extends ServiceProvider {
 	{
 		$this->app->bindShared('stillat.database.tenant.repository', function($app)
 		{
-			$tenantTables = $app['config']->get('stillat::tenants.tableNames', null);
-			
+			$tenantTables = $app['config']->get('stillat-database::tenants.tableNames', null);
+
 			if ($tenantTables === null)
 			{
 				$tenantTables = array(

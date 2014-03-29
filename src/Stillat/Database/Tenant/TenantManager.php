@@ -135,12 +135,12 @@ class TenantManager {
 
 		$this->tenantRepository = $repository;
 
-		$this->schemaPrefix = $this->app['config']->get('stillat::tenants.schemaPrefix', '');
+		$this->schemaPrefix = $this->app['config']->get('stillat-database::tenants.schemaPrefix', '');
 
-		$this->preserveReadWriteConfiguration = $this->app['config']->get('stillat::tenants.preserveReadWrite', false);
+		$this->preserveReadWriteConfiguration = $this->app['config']->get('stillat-database::tenants.preserveReadWrite', false);
 
 		// Get the migration behavior from the tenant configuration file.
-		$this->migrationBehavior = $this->app['config']->get('stillat::tenants.migrationBehavior', 'exclude');
+		$this->migrationBehavior = $this->app['config']->get('stillat-database::tenants.migrationBehavior', 'exclude');
 
 		// Just convert the migration behavior to lower-case.
 		$this->migrationBehavior = strtolower($this->migrationBehavior);
@@ -154,7 +154,7 @@ class TenantManager {
 
 		// Check to see if there are any migrations listed in the tenant configuration file. If there are,
 		// try and add them.
-		$tenantMigrationCollection = $this->app['config']->get('stillat::tenants.migrations', null);
+		$tenantMigrationCollection = $this->app['config']->get('stillat-database::tenants.migrations', null);
 
 		if ($tenantMigrationCollection !== null and is_array($tenantMigrationCollection) and count($tenantMigrationCollection) > 0)
 		{
