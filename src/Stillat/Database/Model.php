@@ -71,7 +71,7 @@ abstract class Model extends Ardent {
 	 */
 	public function next()
 	{
-		return static::where($this->getKeyName(), '>', $this->getKey())->min('id');
+		return static::where($this->getKeyName(), '>', $this->getKey())->min($this->getKeyName());
 	}
 
 	/**
@@ -81,7 +81,7 @@ abstract class Model extends Ardent {
 	 */
 	public function previous()
 	{
-		return static::where($this->getKeyName(), '<', $this->getKey())->max('id');
+		return static::where($this->getKeyName(), '<', $this->getKey())->max($this->getKeyName());
 	}
 
 }
