@@ -63,6 +63,13 @@ class TenantManager {
 	 */
 	protected $schemaPrefix = '';
 
+    /**
+     * The database prefix, if any.
+     *
+     * @var string
+     */
+    protected $databasePrefix = '';
+
 	/**
 	 * Indicates whether the manager will preserve database configuration
 	 * settings for read/write servers.
@@ -136,6 +143,8 @@ class TenantManager {
 		$this->tenantRepository = $repository;
 
 		$this->schemaPrefix = $this->app['config']->get('stillat-database::tenants.schemaPrefix', '');
+
+        $this->databasePrefix = $this->app['config']->get('stillat-database::tenants.databasePrefix', '');
 
 		$this->preserveReadWriteConfiguration = $this->app['config']->get('stillat-database::tenants.preserveReadWrite', false);
 
@@ -323,7 +332,7 @@ class TenantManager {
 	{
 		if (strlen($this->getSchemaPrefix()) == 2)
 		{
-			return $this->getSchemaPrefix().self::TENANT_SCHEMA_SEPARATOR.$this->getTierName($tierID);
+			return $this->getSchemaPrefix().self::TENANT_SCHEMA_SEPARATOR.$this->databasePrefix.$this->getTierName($tierID);
 		}
 
 		return $this->getTierName($tierID);

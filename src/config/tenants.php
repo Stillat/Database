@@ -27,9 +27,24 @@ return array(
     | An optional two character schema prefix to be used when creating or
     | dropping schemas. This should remain consistent.
     |
+    | This prefix is used in this form: <prefix>_<schema>
     */
    
     'schemaPrefix' => '',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Database Prefix
+    |--------------------------------------------------------------------------
+    |
+    | An optional database prefix to be used when creating or dropping schemas.
+    | This should remain consistent.
+    |
+    | This prefix is used in this form: <prefix>_<database_prefix><schema>
+    |                                   stillat_<database_prefix>schema
+    */
+
+    'databasePrefix' => '',
 
     /*
     |--------------------------------------------------------------------------
@@ -75,5 +90,17 @@ return array(
    
     'migrations' => array(
     ),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Strict Mode
+    |--------------------------------------------------------------------------
+    |
+    | Strict mode determines if the rules for schema name and prefix lengths are
+    | obeyed. Schema prefixes are by default limited to 2 characters, and schema
+    | names are by default limited to 35 characters. Disable this to not have limits.
+    */
+
+    'strictMode' => true,
 
 );
