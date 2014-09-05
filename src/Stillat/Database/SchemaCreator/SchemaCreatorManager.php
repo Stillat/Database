@@ -77,6 +77,8 @@ class SchemaCreatorManager {
 				throw new InvalidArgumentException("Driver '{$defaultConnectionDriver}' is not a valid schema creator driver.");
 				break;
 		}
+
+        $this->schemaDriver->setStrictMode($this->app['config']->get('stillat-database::tenants.strictMode', true));
 	}
 
 	/**

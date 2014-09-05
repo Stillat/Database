@@ -49,6 +49,13 @@ class PDOSchemaDriver implements SchemaCreatorInterface {
 	 */
 	protected $password = '';
 
+    /**
+     * Indicates if strict mode is enabled.
+     *
+     * @var bool
+     */
+    protected $strictMode = true;
+
 	/**
 	 * Returns a new instance of PDOSchemaDriver
 	 * 
@@ -63,6 +70,16 @@ class PDOSchemaDriver implements SchemaCreatorInterface {
 		$this->username = $username;
 		$this->password = $password;
 	}
+
+    /**
+     * Sets the strict mode setting.
+     *
+     * @param $mode
+     */
+    public function setStrictMode($mode)
+    {
+        $this->strictMode = $mode;
+    }
 
 	/**
 	 * Returns the PDO Connection
@@ -164,6 +181,8 @@ class PDOSchemaDriver implements SchemaCreatorInterface {
 	 */
 	protected function validateSchemaName($schema)
 	{
+        if (!$this->strictMode) { return; } // Just return true if strict mode is disabled.
+
 		if (strlen(trim($schema)) > 35)
 		{
 			throw new InvalidArgumentException("Invalid schema name '{$schema}'. Schema name too long.");
