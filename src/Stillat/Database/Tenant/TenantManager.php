@@ -330,6 +330,11 @@ class TenantManager {
 	 */
 	public function getTierNameWithPrefix($tierID)
 	{
+		if (strlen($this->getSchemaPrefix() == 0))
+		{
+			return $this->databasePrefix.$this->getTierName($tierID);
+		}
+
 		return $this->getSchemaPrefix().self::TENANT_SCHEMA_SEPARATOR.$this->databasePrefix.$this->getTierName($tierID);
 	}
 
